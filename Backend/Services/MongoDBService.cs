@@ -13,7 +13,7 @@ public class MongoDbService
     {
         var client = new MongoClient(mongoDbSettings.Value.ConnectionUri);
         var database = client.GetDatabase(mongoDbSettings.Value.DataBaseName);
-        _moviesCollection = database.GetCollection<Movie>(mongoDbSettings.Value.CollectionName);
+        _moviesCollection = database.GetCollection<Movie>(mongoDbSettings.Value.MovieCollectionName);
     }
 
     public async Task InsertAsync(Movie movie)
@@ -26,10 +26,10 @@ public class MongoDbService
         return await _moviesCollection.Find(new BsonDocument()).ToListAsync();
     }
 
-    public async Task AddToMoviesAsync(string id, string movieId)
+    public async Task AddToMoviesAsync(string id, string title)
     {
         var filter = Builders<Movie>.Filter.Eq("Id", id);
-        var update = Builders<Movie>.Update.AddToSet("movieId", movieId);
+        var update = Builders<Movie>.Update.Set("Title", title);
         await _moviesCollection.UpdateOneAsync(filter, update);
     }
 

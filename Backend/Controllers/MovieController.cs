@@ -22,9 +22,9 @@ public class MovieController(MongoDbService mongoDbService) : Controller
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(string id, [FromBody] string movieId)
+    public async Task<IActionResult> Put(string id, [FromBody] string title)
     {
-        await mongoDbService.AddToMoviesAsync(id, movieId);
+        await mongoDbService.AddToMoviesAsync(id, title);
         return NoContent();
     }
 
