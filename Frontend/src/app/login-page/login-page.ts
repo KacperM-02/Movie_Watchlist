@@ -25,9 +25,7 @@ export class LoginPage implements OnInit {
   ngOnInit(): void {
     const IdConfiguration = {
       client_id: '667934156999-ghcmogbftljiqdugqf9db0n4va57g6j8.apps.googleusercontent.com',
-      callback: (response: any) => {
-        this.handleLogin(response);
-      },
+      callback: (response: any) => this.handleLogin(response),
     };
     google.accounts.id.initialize(IdConfiguration);
 
