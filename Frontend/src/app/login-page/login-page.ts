@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 declare var google: any;
 @Component({
@@ -8,11 +9,24 @@ declare var google: any;
   styleUrl: './login-page.css',
 })
 export class LoginPage implements OnInit {
+  private router = inject(Router);
+  handleLogin(response: any) {
+    if (response) {
+      const payload = this.decodeToken(response.credential);
+      sessionStorage.setItem('loggedInUser', JSON.stringify(payload));
+      this.router.navigate(['browse']);
+    }
+  }
+
+  private decodeToken(token: string) {
+    return JSON.parse(atob(token.split('.')[1]));
+  }
+
   ngOnInit(): void {
     const IdConfiguration = {
       client_id: '667934156999-ghcmogbftljiqdugqf9db0n4va57g6j8.apps.googleusercontent.com',
       callback: (response: any) => {
-        console.log(response);
+        this.handleLogin(response);
       },
     };
     google.accounts.id.initialize(IdConfiguration);
