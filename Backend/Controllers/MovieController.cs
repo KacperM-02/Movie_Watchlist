@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers;
 
-[Controller]
-[Route("api/[controller]")]
-public class MovieController(MongoDbService mongoDbService) : Controller
+[ApiController]
+[Route("[controller]")]
+public class MovieController(MongoDbService mongoDbService) : ControllerBase
 {
     [HttpGet]
     public async Task<List<Movie>> Get()
