@@ -7,7 +7,7 @@ namespace Backend.Controllers;
 [Route("[controller]")]
 public class AuthController : ControllerBase
 {
-    [HttpPost("login")]
+    [HttpPost]
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
         try
