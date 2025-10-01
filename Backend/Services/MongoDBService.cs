@@ -40,4 +40,9 @@ public class MongoDbService
     {
         return await _usersCol.Find(new BsonDocument()).ToListAsync();
     }
+    
+    public async Task<User?> GetUserByEmailAsync(string email)
+    {
+        return await _usersCol.Find(user => user.Email == email).FirstOrDefaultAsync();
+    }
 }

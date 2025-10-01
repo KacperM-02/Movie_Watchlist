@@ -10,7 +10,12 @@ public class User
     [BsonRepresentation(BsonType.ObjectId)]
     public string? Id { get; set; } = null;
 
-    [BsonElement("username")]
-    [JsonPropertyName("username")]
-    public string Username { get; set; } = null!;
+    [BsonElement("email")]
+    public string Email { get; set; } = null!;
+
+    [BsonElement("name")]
+    public string Name { get; set; } = null!;
+
+    [BsonElement("picture")]
+    public string Picture { get; set; } = null!;
 }
