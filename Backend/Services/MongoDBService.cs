@@ -7,35 +7,37 @@ namespace Backend.Services;
 
 public class MongoDbService
 {
-    private readonly IMongoCollection<Movie> _moviesCollection;
+    private readonly IMongoCollection<Movie> _moviesCol;
+    private readonly IMongoCollection<User> _usersCol;
 
     public MongoDbService(IOptions<MongoDbSettings> mongoDbSettings)
     {
         var client = new MongoClient(mongoDbSettings.Value.ConnectionUri);
         var database = client.GetDatabase(mongoDbSettings.Value.DataBaseName);
-        _moviesCollection = database.GetCollection<Movie>(mongoDbSettings.Value.MovieCollectionName);
+        _moviesCol = database.GetCollection<Movie>(mongoDbSettings.Value.MoviesColName);
+        _usersCol = database.GetCollection<User>(mongoDbSettings.Value.UsersColName);
+    }
+    
+    // Movies collection
+    public async Task InsertMovieAsync(Movie movie)
+    {
+        await _moviesCol.InsertOneAsync(movie);
     }
 
-    public async Task InsertAsync(Movie movie)
+    public async Task<List<Movie>> GetAllMoviesAsync()
     {
-        await _moviesCollection.InsertOneAsync(movie);
+        return await _moviesCol.Find(new BsonDocument()).ToListAsync();
     }
 
-    public async Task<List<Movie>> GetAllAsync()
+    
+    // Users collection
+    public async Task InsertUserAsync(User user)
     {
-        return await _moviesCollection.Find(new BsonDocument()).ToListAsync();
+        await _usersCol.InsertOneAsync(user);
     }
 
-    public async Task AddToMoviesAsync(string id, string title)
+    public async Task<List<User>> GetAllUsersAsync()
     {
-        var filter = Builders<Movie>.Filter.Eq("Id", id);
-        var update = Builders<Movie>.Update.Set("Title", title);
-        await _moviesCollection.UpdateOneAsync(filter, update);
-    }
-
-    public async Task DeleteAsync(string id)
-    {
-        var filter = Builders<Movie>.Filter.Eq("Id", id);
-        await _moviesCollection.DeleteOneAsync(filter);
+        return await _usersCol.Find(new BsonDocument()).ToListAsync();
     }
 }
