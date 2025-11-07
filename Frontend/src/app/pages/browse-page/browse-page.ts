@@ -10,7 +10,10 @@ import { Header } from '../../core/components/header/header';
 })
 export class BrowsePage {
   auth = inject(AuthService);
-
+  name = JSON.parse(sessionStorage.getItem("loggedInUser")!).name;
+  userProfileImg = JSON.parse(sessionStorage.getItem("loggedInUser")!).picture;
+  email = JSON.parse(sessionStorage.getItem("loggedInUser")!).email;
+  
   signOut(): void {
     sessionStorage.removeItem('loggedInUser');
     this.auth.signOut();

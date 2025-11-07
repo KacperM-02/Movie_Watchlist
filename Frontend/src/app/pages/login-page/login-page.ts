@@ -20,6 +20,7 @@ export class LoginPage implements OnInit {
       this.http.post('http://localhost:5005/Auth', { idToken }).subscribe({
         next: (response) => {
           console.log('Backend response:', response);
+          sessionStorage.setItem("loggedInUser", JSON.stringify(response));
           this.router.navigate(['browse']);
         },
         error: (err) => console.error('Login error:', err),
