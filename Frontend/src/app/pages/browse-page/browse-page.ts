@@ -1,9 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { AuthService } from '../services/auth';
+import { AuthService } from '../../shared/services/auth';
+import { Header } from '../../core/components/header/header';
 
 @Component({
   selector: 'app-browse-page',
-  imports: [],
+  imports: [Header],
   templateUrl: './browse-page.html',
   styleUrl: './browse-page.css',
 })

@@ -17,7 +17,7 @@ export class LoginPage implements OnInit {
     if (response && response.credential) {
       const idToken = response.credential;
 
-      this.http.post('http://localhost:5005/login', { idToken }).subscribe({
+      this.http.post('http://localhost:5005/Auth', { idToken }).subscribe({
         next: (response) => {
           console.log('Backend response:', response);
           this.router.navigate(['browse']);
